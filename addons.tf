@@ -8,6 +8,9 @@ resource "aws_eks_addon" "kube_proxy" {
       "eks_addon" = "kube-proxy"
     }
   )
+  depends_on = [
+      aws_eks_addon.ebs-csi
+  ]  
 }
 
 resource "aws_eks_addon" "core_dns" {
@@ -20,6 +23,9 @@ resource "aws_eks_addon" "core_dns" {
       "eks_addon" = "coredns"
     }
   )
+  depends_on = [
+      aws_eks_addon.ebs-csi
+  ]  
 }
 
 resource "aws_eks_addon" "vpc-cni" {
@@ -32,6 +38,9 @@ resource "aws_eks_addon" "vpc-cni" {
       "eks_addon" = "vpc-cni"
     }
   )
+  depends_on = [
+      aws_eks_addon.ebs-csi
+  ]  
 }
 
 # https://aws.amazon.com/blogs/containers/amazon-ebs-csi-driver-is-now-generally-available-in-amazon-eks-add-ons/ 
