@@ -2,7 +2,7 @@ resource "aws_eks_addon" "kube_proxy" {
   addon_name        = "kube-proxy"
   cluster_name      = var.cluster_name
   addon_version     = var.version_kube_proxy
-  resolve_conflicts = "OVERWRITE"  
+  resolve_conflicts = "PRESERVE"  
   tags = merge(
     {
       "eks_addon" = "kube-proxy"
@@ -38,9 +38,9 @@ resource "aws_eks_addon" "vpc-cni" {
       "eks_addon" = "vpc-cni"
     }
   )
-  depends_on = [
-      aws_eks_addon.ebs-csi
-  ]  
+  # depends_on = [
+  #     aws_eks_addon.ebs-csi
+  # ]  
 }
 
 # https://aws.amazon.com/blogs/containers/amazon-ebs-csi-driver-is-now-generally-available-in-amazon-eks-add-ons/ 
@@ -62,7 +62,7 @@ module "irsa-ebs-csi" {
 resource "aws_eks_addon" "ebs-csi" {
   cluster_name             = module.eks.cluster_name
   addon_name               = "aws-ebs-csi-driver"
-  addon_version            = "v1.20.0-eksbuild.1"
+  addon_version            = var.version_ebs-csi
   service_account_role_arn = module.irsa-ebs-csi.iam_role_arn
   tags = {
     "eks_addon" = "ebs-csi"

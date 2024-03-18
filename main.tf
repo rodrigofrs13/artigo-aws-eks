@@ -54,11 +54,10 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.3"
 
-  cluster_name    = local.cluster_name
-  cluster_version = var.eks_version #"1.27"
-
-  vpc_id                         = module.vpc.vpc_id
-  subnet_ids                     = module.vpc.private_subnets
+  cluster_name                            = local.cluster_name
+  cluster_version                         = var.eks_version
+  vpc_id                                  = module.vpc.vpc_id
+  subnet_ids                              = module.vpc.private_subnets
   cluster_endpoint_public_access          = true
   cluster_endpoint_private_access         = true
   cluster_enabled_log_types               = var.cluster_enabled_log_types 
@@ -80,14 +79,14 @@ module "eks" {
       desired_size = 1
     }
 
-    # two = {
-    #   name = "node-group-2"
+    two = {
+      name = "node-group-2"
 
-    #   instance_types = ["t3.small"]
+      instance_types = ["t3.small"]
 
-    #   min_size     = 1
-    #   max_size     = 2
-    #   desired_size = 1
-    # }
+      min_size     = 1
+      max_size     = 2
+      desired_size = 1
+    }
   }
 }

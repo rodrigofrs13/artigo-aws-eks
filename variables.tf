@@ -87,4 +87,7 @@ variable "enable_dns_hostnames" {
   default     = ""
 }
 
-
+variable "namespace" {
+  type    = string
+  default = "monitoring"
+}
